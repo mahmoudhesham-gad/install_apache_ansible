@@ -1,38 +1,55 @@
-Role Name
-=========
+# Role Name
 
-A brief description of the role goes here.
+install_apache
 
-Requirements
-------------
+## Description
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This role installs and enables the Apache web server (`apache2` on Debian-based systems, `httpd` on RedHat-based systems).
 
-Role Variables
---------------
+## Requirements
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+- SSH connection to the managed nodes must be established.
+- It is recommended to use SSH key-based authentication and passwordless `sudo` for privilege escalation.
 
-Dependencies
-------------
+## Role Variables
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+The role uses OS-specific variables to determine the correct package name for Apache.
 
-Example Playbook
-----------------
+- `apache_name`: The name of the Apache package.
+  - `vars/Debian.yml`: `apache_name: "apache2"`
+  - `vars/RedHat.yml`: `apache_name: httpd`
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+The appropriate variable file is included automatically based on the `ansible_os_family` fact.
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+## Dependencies
 
-License
--------
+This role has no dependencies on other roles.
+
+## Example Playbook
+
+Here is an example of how to use the `install_apache` role in a playbook:
+
+```yaml
+---
+- hosts: webservers
+  roles:
+    - install_apache
+```
+
+## How to use
+
+To execute the role, run the `ansible-playbook` command, specifying your inventory file and playbook.
+
+For example, from the root directory of the project:
+
+```bash
+ansible-playbook -i hosts.ini playbook.yml
+```
+
+## License
 
 BSD
 
-Author Information
-------------------
+## Author Information
 
 An optional section for the role authors to include contact information, or a website (HTML is not allowed).
