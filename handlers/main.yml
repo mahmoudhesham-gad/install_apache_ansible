@@ -1,0 +1,6 @@
+---
+- name: Start and enable apache service
+  service:
+    name: "{{ apache_name }}"
+    state: started
+    enabled: true

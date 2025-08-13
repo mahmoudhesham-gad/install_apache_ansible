@@ -1,0 +1,12 @@
+---
+# tasks file for install_apache
+- name: Include OS-specific variables
+  include_vars:
+    file: "{{ ansible_os_family }}.yml"
+
+- name: install_apache
+  package:
+    name: "{{ apache_name }}"
+    state: present
+  notify:
+    Start and enable apache service
